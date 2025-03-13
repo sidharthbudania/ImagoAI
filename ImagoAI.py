@@ -35,6 +35,8 @@ X_test_tensor = torch.tensor(X_test, dtype=torch.float32)
 y_train_tensor = torch.tensor(y_train, dtype=torch.float32).view(-1, 1)
 y_test_tensor = torch.tensor(y_test, dtype=torch.float32).view(-1, 1)
 
+// improves MLP increase number of layers nodes increase complexity
+
 class ImprovedMLP(nn.Module):
     def __init__(self, input_size):
         super(ImprovedMLP, self).__init__()
@@ -111,27 +113,24 @@ mae = mean_absolute_error(y_test_orig, y_pred_test)
 rmse = np.sqrt(mean_squared_error(y_test_orig, y_pred_test))
 r2 = r2_score(y_test_orig, y_pred_test)
 
-print(f"✅ FINAL MODEL PERFORMANCE: MAE={mae:.4f}, RMSE={rmse:.4f}, R²={r2:.4f}")
+print(f"mae={mae:.4f}, Rmse={rmse:.4f}, r²={r2:.4f}")
 
 plt.figure(figsize=(6,6))
 plt.scatter(y_test_orig, y_pred_test, alpha=0.6, color='blue')
 plt.plot([min(y_test_orig), max(y_test_orig)], [min(y_test_orig), max(y_test_orig)], '--r', linewidth=2)
-plt.xlabel("Actual DON Concentration")
-plt.ylabel("Predicted DON Concentration")
-plt.title("Actual vs. Predicted DON Levels (Improved MLP + Optimized XGBoost)")
+plt.xlabel("actual DON concentration")
+plt.ylabel("predicted DON concentration")
 plt.show()
 
 plt.figure(figsize=(10, 5))
 plt.plot(np.mean(X, axis=0), color='blue', linewidth=2)
-plt.xlabel("Spectral Band Index")
-plt.ylabel("Average Reflectance")
-plt.title("Average Reflectance Across Spectral Bands")
+plt.xlabel("spectral band")
+plt.ylabel("average reflectance")
 plt.grid(True)
 plt.show()
 
 plt.figure(figsize=(12, 6))
 sns.heatmap(X[:50, :], cmap="coolwarm", cbar=True, xticklabels=False, yticklabels=False)
-plt.xlabel("Spectral Band Index")
-plt.ylabel("Sample Index")
-plt.title("Heatmap of Spectral Reflectance (First 50 Samples)")
+plt.xlabel("spectral band index")
+plt.ylabel("sample index")
 plt.show()
